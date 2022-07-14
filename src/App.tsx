@@ -1,23 +1,29 @@
-import React from 'react';
-import logo from './aca.png';
+import React, {useState} from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
+import EndScreen from './Components/EndScreen';
+import MainMenu from './Components/MainMenu';
+import Summary from './Components/Summary';
+import Quiz from './Components/Quiz';
+import { QuizContext } from './Helpers/Contexts';
 
 function App() {
+  const [gameState, setGameState] = useState("menu");
+  const [userName, setUserName] = useState("");
+  const [score, setScore] = useState(0);
+  //const {users, setUsers} = useState(users);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} style={{maxWidth:150, maxHeight:150}} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://africacode.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          I Love ACA
-        </a>
+        <h1>Quiz App</h1>
+        <QuizContext.Provider value={{gameState,setGameState,score, setScore}}>
+        {gameState === "menu" && <MainMenu/>}
+        {gameState === "quiz" && <Quiz/>}
+        {gameState === "endscreen" && <EndScreen/>}
+        {gameState === "summary" && <Summary/>}
+        </QuizContext.Provider>
       </header>
     </div>
   );
